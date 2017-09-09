@@ -1,6 +1,11 @@
-language: csharp
+sudo: required
+dist: trusty
+before_install:
+  - sudo sh -c 'echo "deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main" > /etc/apt/sources.list.d/dotnetdev.list'
+  - sudo apt-key adv --keyserver apt-mo.trafficmanager.net --recv-keys 417A0893
+  - sudo apt-get update
+  - sudo apt-get install dotnet-dev-1.0.4
 script:
-  - nuget restore SuperSocket-Net40.sln
-  - xbuild SuperSocket-Net40.sln
-  - nuget restore SuperSocket-Net45.sln
-  - xbuild SuperSocket-Net45.sln
+  - cd src/SuperSocket.Server
+  - dotnet restore
+  - dotnet build
